@@ -1,0 +1,89 @@
+#listing all PSprovides
+Get-PSProvider
+Get-Alias -Name dir
+
+(Get-ChildItem C:\Windows\System32).count
+
+Get-ChildItem C:\Windows\System32 | Measure-Object
+
+Get-Help Get-ChildItem -Detailed
+
+Get-ChildItem C:\Windows\System32 -Recurse | Measure-Object
+
+cd ENV:
+Get-ChildItem
+
+Get-Item C:\Windows\System32
+
+Get-ItemProperty C:\Windows\System32 | Select-Object -Property *
+Get-ItemProperty C:\Demo | fl *
+
+Get-Help Set-ItemProperty -Online
+
+New-Item -Path C:\Demo -ItemType Directory 
+Get-ItemProperty C:\Demo | fl *
+Set-ItemProperty C:\Demo -Name CreationTime 12/07/2018
+
+
+Get-Date | Get-Member
+(Get-Date).AddDays(-120)
+
+#generate 3 year old date and save in veriable
+$olddays = (Get-Date).AddYears(-3)
+
+#filter files usning last write time and file type
+Get-ChildItem -Path C:\Windows\System32\*.dll | Where-Object {$_.LastWriteTime -lt $olddays}
+
+Get-Help Get-ChildItem -Online
+
+Get-ChildItem C:\Windows\System32\* -Include *.dll
+
+New-Item C:\Demo\one.txt
+
+Get-Command -Noun content
+
+Add-Content -Path C:\Demo\one.txt -Value "My name is navinya"
+
+Add-Content -Path C:\Demo\one.txt -Value "My full name is navinya ambre"
+Set-Content -Path C:\Demo\one.txt -Value "My full name is n a"
+
+Copy-Item -Path C:\Demo\one.txt -Destination C:\Demo\1.txt
+
+Get-Service | Select-Object Name, Status | Sort-Object -Property Status
+
+Get-Process | Select-Object -Property Name, workingset | Sort-Object -Property WorkingSet -Descending | Select-Object -Wait
+
+Get-Process | Select-Object -Property Name, workingset | Select-Object Wait
+
+Get-Help Stop-Service -Online
+
+Start-Transaction
+
+
+Get-Process | Stop-Service
+
+Get-Process | Get-Member
+"navinya" | Stop-Service
+
+Get-Service | Where-Object{$_.Status -eq 'stopped'} | Start-Service -WhatIf
+
+$myhash = @{name = 'Navinya'; surname = 'Ambre'}
+
+$myhash.name
+
+Get-Service | Select-Object *, @{l= "ServiceName1"; e = {$_.Name}}
+
+Get-Process | Select-Object Name, @{l= "WS(MB)"; e = {$_.WS/1MB }} 
+
+Write-Host "this is my message" -ForegroundColor Red
+
+Write-Warning "this is waning"
+
+Write-Error "This is error"
+
+$firstnumber = Read-Host
+Write-Host "your number is $firstnumber"
+
+[int]$firstnumber = Read-Host "Give first number >>"
+[int]$lastnumber = Read-Host "Give second number >>"
+Write-Host "your addition is $($firstnumber+$lastnumber)"
